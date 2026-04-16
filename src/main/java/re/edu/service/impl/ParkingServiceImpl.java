@@ -62,6 +62,7 @@ public class ParkingServiceImpl implements ParkingService {
                 .licensePlate(savedTicket.getVehicle().getLicensePlate())
                 .zoneName(savedTicket.getZone().getName())
                 .checkInTime(savedTicket.getCheckInTime())
+                .typeVehicle(savedTicket.getVehicle().getVehicleType())
                 .checkOutTime(savedTicket.getCheckOutTime())
                 .build();
 
@@ -96,6 +97,7 @@ public class ParkingServiceImpl implements ParkingService {
                 .id(updatedTicket.getId())
                 .licensePlate(updatedTicket.getVehicle().getLicensePlate())
                 .zoneName(updatedTicket.getZone().getName())
+                .typeVehicle(updatedTicket.getVehicle().getVehicleType())
                 .checkInTime(updatedTicket.getCheckInTime())
                 .checkOutTime(updatedTicket.getCheckOutTime())
                 .build();
