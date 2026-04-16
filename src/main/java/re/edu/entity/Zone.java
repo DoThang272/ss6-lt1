@@ -1,25 +1,33 @@
 package re.edu.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-@NoArgsConstructor
-@AllArgsConstructor
+@Table(name = "zones")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Zone {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    private int capacity;
+    @Column(name = "capacity", nullable = false)
+    private Integer capacity;
 
-    private int occupiedSpots;
+    @Column(name = "occupied_spots", nullable = false)
+    private Integer occupiedSpots;
 
+    @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ParkingTicket> parkingTickets = new ArrayList<>();
 }

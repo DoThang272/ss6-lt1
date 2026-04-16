@@ -1,28 +1,34 @@
 package re.edu.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "parking_tickets")
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ParkingTicket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "check_in_time", nullable = false)
     private LocalDateTime checkInTime;
+
+    @Column(name = "check_out_time")
     private LocalDateTime checkOutTime;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "vehicle_id", nullable = false)
+    private Vehicle vehicle;
 
-
-    @OneToMany(mappedBy = "zone_id")
-    private List<Zone> zone;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "zone_id", nullable = false)
+    private Zone zone;
 }

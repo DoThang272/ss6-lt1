@@ -1,29 +1,28 @@
 package re.edu.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.List;
-
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "vehicles")
 @Getter
 @Setter
-@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Vehicle {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "license_plate", nullable = false, unique = true, length = 20)
     private String licensePlate;
+
+    @Column(name = "color", nullable = false, length = 50)
     private String color;
-    private TypeVehicle typeVehicle;
 
-    @OneToMany(mappedBy = "vehicle")
-    private List<ParkingTicket> parkingTicket;
-
-
+    @Enumerated(EnumType.STRING)
+    @Column(name = "vehicle_type", nullable = false, length = 20)
+    private TypeVehicle vehicleType;
 }
