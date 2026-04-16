@@ -19,6 +19,10 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     public ApiResponse<VehicleResponse> createVehicle(VehicleCreateRequest request) {
+        if (vehicleRepository.existsByLicensePlate(request.getLicensePlate())) {
+            throw new RuntimeException("License plate already exists");
+        }
+
         Vehicle vehicle = Vehicle.builder()
                 .licensePlate(request.getLicensePlate())
                 .color(request.getColor())
@@ -49,16 +53,10 @@ public class VehicleServiceImpl implements VehicleService {
             String direction,
             String keyword
     ) {
-        if (page < 0) {
-            page = 0;
-        }
-
-        if (size <= 0) {
-            size = 10;
-        }
+        if (page < 0) page = 0;
+        if (size <= 0) size = 10;
 
         Sort sort = Sort.unsorted();
-
         if (sortBy != null && !sortBy.isBlank() && direction != null && !direction.isBlank()) {
             Sort.Direction sortDirection =
                     direction.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
@@ -66,7 +64,6 @@ public class VehicleServiceImpl implements VehicleService {
         }
 
         Pageable pageable = PageRequest.of(page, size, sort);
-
         String normalizedKeyword = (keyword == null || keyword.isBlank()) ? null : keyword.trim();
 
         Page<VehicleResponse> vehiclePage = vehicleRepository.findAllByKeyword(normalizedKeyword, pageable);

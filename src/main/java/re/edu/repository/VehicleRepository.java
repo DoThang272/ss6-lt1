@@ -24,4 +24,6 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
                or lower(cast(v.vehicleType as string)) like lower(concat('%', :keyword, '%')))
         """)
     Page<VehicleResponse> findAllByKeyword(@Param("keyword") String keyword, Pageable pageable);
+
+    boolean existsByLicensePlate(String licensePlate);
 }

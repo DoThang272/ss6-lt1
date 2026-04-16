@@ -24,11 +24,11 @@ public class ParkingTicket {
     @Column(name = "check_out_time")
     private LocalDateTime checkOutTime;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "zone_id", nullable = false)
     private Zone zone;
 }

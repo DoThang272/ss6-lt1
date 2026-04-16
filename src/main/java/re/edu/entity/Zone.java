@@ -19,7 +19,7 @@ public class Zone {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 100)
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "capacity", nullable = false)
@@ -28,6 +28,6 @@ public class Zone {
     @Column(name = "occupied_spots", nullable = false)
     private Integer occupiedSpots;
 
-    @OneToMany(mappedBy = "zone", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "zone")
     private List<ParkingTicket> parkingTickets = new ArrayList<>();
 }
